@@ -1,18 +1,20 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="todo-list-container">
+    <ListContainer/>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+  import ListContainer from "@/components/ListContainer";
 </script>
+
+<style scoped>
+  .todo-list-container {
+    width: 35%;
+    height: 75%;
+    padding: 50px;
+    border: 3px solid #d85fe3;
+    border-radius: 50px;
+    background-color: #f9e3fa;
+  }
+</style>

@@ -9,29 +9,14 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { computed } from 'vue';
+  import { useStore } from 'vuex';
+
   import CompletedListItem from "@/components/CompletedListItem";
 
-  const completed = ref([
-    {
-      id: 1,
-      name: 'Постирать трусы',
-      description: 'Постирать трусы',
-      completedDate: '21.01.2001'
-    },
-    {
-      id: 2,
-      name: 'Постирать трусы',
-      description: 'Постирать трусы',
-      completedDate: '21.01.2001'
-    },
-    {
-      id: 3,
-      name: 'Постирать трусы',
-      description: 'Постирать трусы',
-      completedDate: '21.01.2001'
-    }
-  ])
+  const store = useStore();
+
+  const completed = computed(() => store.state.todoList);
 </script>
 
 <style scoped>

@@ -24,12 +24,42 @@ export default createStore({
           name: 'Пописить',
           description: 'Почитать книгу'
         }
+      ],
+      completedList: [
+        {
+          id: 5,
+          name: 'Пакакать',
+          description: 'Приятно пакакать попай'
+        },
+        {
+          id: 6,
+          name: 'Пофифкать',
+          description: 'Приятно пакакать попай'
+        }
       ]
     }
   },
 
   mutations: {
+    addTodoItem(state, todoItem) {
+      state.todoList.push(todoItem);
+    },
 
+    addCompletedItem(state, completedItem) {
+      state.completedList.push(completedItem);
+    },
+
+    updateTodoItem(state, todoItem) {
+      console.log(todoItem);
+      const index = state.todoList.findIndex(item => item.id === todoItem.id);
+      if (index !== -1) {
+        state.todoList[index] = todoItem;
+      }
+    },
+
+    deleteTodoItem(state, itemId) {
+      state.todoList = state.todoList.filter(item => item.id !== itemId);
+    }
   },
 
   actions: {
@@ -37,6 +67,8 @@ export default createStore({
   },
 
   getters: {
-
+    getTodoListById(state, todoId) {
+      return state.todoList.find(item => item.id === todoId);
+    }
   }
 })

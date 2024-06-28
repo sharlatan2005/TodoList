@@ -1,7 +1,7 @@
 <template>
   <div class="todo-list-container__completed-list-container">
     <CompletedListItem
-    v-for="completedItem in completed"
+    v-for="completedItem in completedList"
     :completedInfo="completedItem"
     :completionDate="new Date()"
     />
@@ -16,7 +16,7 @@
 
   const store = useStore();
 
-  const completed = computed(() => store.state.todoList);
+  const completedList = computed(() => store.state.completedList);
 </script>
 
 <style scoped>

@@ -38,7 +38,19 @@
         router.push('/completed_list');
         break;
       case('Создать'):
-        router.push('todo_edit');
+        let todoInfo = {
+          id: null,
+          name: '',
+          description: ''
+        };
+
+        router.replace({
+          path: '/todo_edit',
+          query: {
+            isNewItem: true,
+            todoInfo: JSON.stringify(todoInfo),
+          }
+        });
         break;
     }
   }

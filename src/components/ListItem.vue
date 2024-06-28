@@ -1,5 +1,7 @@
 <template>
-  <span class="list-item">
+  <span class="list-item"
+  @click="goToEditPage(props.todoInfo)"
+  >
     <div class="list-item__text">
       {{ todoInfo.name }}
     </div>
@@ -12,6 +14,7 @@
 <script setup>
   import DeleteButton from "@/components/DeleteButton.vue";
   import { defineProps, defineEmits } from 'vue';
+  import { useRouter } from 'vue-router';
 
   const props = defineProps({
     todoInfo: {
@@ -28,6 +31,17 @@
     'deleteTask'
   ]);
 
+  const router = useRouter();
+
+  function goToEditPage(todoInfo) {
+    router.push({
+      path: '/todo_edit',
+      query: {
+        isNewItem: false,
+        todoInfo: JSON.stringify(todoInfo),
+      }
+    });
+  }
 </script>
 
 <style scoped>

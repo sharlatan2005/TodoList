@@ -2,7 +2,7 @@
   <img
   src="@/assets/icons/trash_bin.svg"
   class="delete-icon"
-  @click="$emit('deleteButtonClicked')"
+  @click="processBtnClick"
   >
 </template>
 
@@ -12,6 +12,11 @@
   const emits = defineEmits([
     'deleteButtonClicked'
   ])
+
+  function processBtnClick(event) {
+    event.stopPropagation();
+    emits('deleteButtonClicked');
+  }
 </script>
 
 <style scoped>

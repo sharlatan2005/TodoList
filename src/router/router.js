@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter } from 'vue-router';
 import HomeView from "@/views/HomeView";
 import TodoListView from "@/views/TodoListView";
 import CompletedListView from "@/views/CompletedListView";
@@ -9,6 +9,10 @@ const routes = [
     path: '/',
     component: HomeView,
     children: [
+      {
+        path: '/',
+        redirect: '/todo_list'
+      },
       { 
         path: '/todo_list',
         component: TodoListView
@@ -19,6 +23,7 @@ const routes = [
       },
       {
         path: '/todo_edit',
+        name: 'TodoEdit',
         component: TodoEditView,
       }
     ]
@@ -26,7 +31,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  mode: 'history',
+  history: createWebHistory(),
   routes,
 })
 

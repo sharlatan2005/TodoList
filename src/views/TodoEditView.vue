@@ -4,11 +4,11 @@
     type="text"
     class="todo-edit__name-input"
     placeholder="Введите название задания"
-    v-model="_todoName">
+    v-model="todoInfo.name">
 
     <textarea
     class="todo-edit__description-input"
-    v-model="_todoDescription"
+    v-model="todoInfo.description"
     placeholder="Введите описание задания"
     >
     </textarea>
@@ -24,23 +24,29 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from 'vue';
+  import { ref, onMounted } from 'vue';
+  import { useRoute, onBeforeRouteUpdate  } from 'vue-router';
 
-  const props = defineProps({
-    todoName: {
-      type: String,
-      default: ''
-    },
-    todoDescription: {
-      type: String,
-      default: ''
-    }
+  let todoInfo = ref({});
+  let isNewItem = true;
+
+  onMounted(() => {
+    const route = useRoute();
+
+    console.log(route.query);
+
+    todoInfo.value = JSON.parse(route.query.todoInfo);
+    isNewItem = JSON.parse(route.query.isNewItem);
   })
 
-  const _todoName = ref(props.todoName);
-  const _todoDescription = ref(props.todoDescription);
-
-
+  // onBeforeRouteUpdate ((to, from, next) => {
+  //   console.log('route updated');
+  //   todoInfo.value = JSON.parse(to.query.todoInfo);
+  //   isNewItem = JSON.parse(to.query.isNewItem);
+    
+  //   next();
+  // })
+  
   import ButtonItem from "@/components/ButtonItem.vue";
 
   const saveButtonStyle = {
@@ -49,8 +55,15 @@
     boxShadow: 'none',
   }
 
+  import store from '@/store/store';
+  import router from '@/router/router';
+
   function processSaveBtnClick() {
 
+    const mutationType = isNewItem ? 'addTodoItem' : 'updateTodoItem';
+    store.commit(mutationType, todoInfo.value);
+
+    router.push('/');
   }
 </script>
 

@@ -3,7 +3,7 @@
   @click="goToEditPage(props.todoInfo)"
   >
     <div class="list-item__text">
-      {{ todoInfo.name }}
+      {{ todoInfo.priority }} {{ todoInfo.name }}
     </div>
     <DeleteButton
     @deleteButtonClicked="$emit('deleteTask', todoInfo.id)"

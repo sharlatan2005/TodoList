@@ -41,7 +41,8 @@
         let todoInfo = {
           id: null,
           name: '',
-          description: ''
+          description: '',
+          priority: 1,
         };
 
         router.push({

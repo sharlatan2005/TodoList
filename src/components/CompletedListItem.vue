@@ -1,7 +1,7 @@
 <template>
   <span class="completed-list-item">
     <div class="completed-list-item__text">
-      Название: {{ completedInfo.name }}<br>
+      Название: {{ completedInfo.name }} <br>
       Начало: {{ getFormattedDate(props.completedInfo.beginDate) }} <br>
       Конец: {{ getFormattedDate(props.completedInfo.completeDate) }} <br>
     </div>
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-  import { defineProps, computed } from 'vue';
+  import { defineProps } from 'vue';
 
   import { getFormattedDate } from '@/utils/dateUtils';
 

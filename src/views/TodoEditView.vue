@@ -1,17 +1,29 @@
 <template>
   <div class="todo-edit">
-    <input
-    type="text"
-    class="todo-edit__name-input"
-    placeholder="Введите название задания"
-    v-model="todoInfo.name">
+    <div class="input-container">
+      <input
+      type="text"
+      class="input-container__name-input"
+      placeholder="Введите название задания"
+      v-model="todoInfo.name">
 
-    <textarea
-    class="todo-edit__description-input"
-    v-model="todoInfo.description"
-    placeholder="Введите описание задания"
-    >
-    </textarea>
+      <textarea
+      class="input-container__description-input"
+      v-model="todoInfo.description"
+      placeholder="Введите описание задания"
+      >
+      </textarea>
+
+      <select
+      class="input_container__priority-input"
+      v-model="todoInfo.priority"
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+
 
     <div class="todo-edit__buttons-wrapper">  <!-- TODO: В тестовом режиме потестить динамическое добавление класса right-aligned-->
       <ButtonItem
@@ -39,15 +51,15 @@
   const route = useRoute();
 
   onMounted(() => {
-    updateTodoInfoAndIsNewItem(route);
+    updateData(route);
   });
 
   onBeforeRouteUpdate((to, from, next) => {
-    updateTodoInfoAndIsNewItem(to);
+    updateData(to);
     next();
   });
 
-  function updateTodoInfoAndIsNewItem(route) {
+  function updateData(route) {
     todoInfo.value = JSON.parse(route.query.todoInfo);
     isNewItem.value = JSON.parse(route.query.isNewItem);
   }
@@ -92,23 +104,34 @@
     align-items: start;
     gap: 10px;
   }
-  
-  input, textarea { 
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .input-container > * {
     padding: 5px;
-    border: 1px solid grey;
+    border: 2px solid black;
     border-radius: 6px;
     font-size: 18px;
   }
 
-  .todo-edit__name-input {
+  .input-container__name-input {
     height: 2em;
     width: 15em;
   }
 
-  .todo-edit__description-input {
+  .input-container__description-input {
     height: 10em;
     width: 100%;
     resize: none;
+  }
+
+  .input_container__priority-input {
+    width: 3em; 
   }
 
   .todo-edit__buttons-wrapper {

@@ -16,7 +16,7 @@
 
   const store = useStore();
 
-  const todoList = computed(() => store.state.todoList);
+  const todoList = computed(() => store.getters.getTodoListSortedByPriority);
   
   function processDeleteTodoItem(itemId) {
     store.commit('deleteTodoItem', itemId);

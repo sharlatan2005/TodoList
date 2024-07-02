@@ -7,34 +7,43 @@ export default createStore({
         {
           id: 1,
           name: 'Почитать книгу',
-          description: 'Почитать книгу'
+          description: 'Почитать книгу',
+          beginDate: '1.01.2001',
         },
         {
           id: 2,
           name: 'Погладить кота',
-          description: 'Почитать книгу'
+          description: 'Почитать книгу',
+          beginDate: '1.01.2001',
         },
         {
           id: 3,
           name: 'Сделать проект П.',
-          description: 'Почитать книгу'
+          description: 'Почитать книгу',
+          beginDate: '1.01.2001',
         },
         {
           id: 4,
           name: 'Пописить',
-          description: 'Почитать книгу'
+          description: 'Почитать книгу',
+          beginDate: '1.01.2001',
         }
       ],
+
       completedList: [
         {
           id: 5,
           name: 'Пакакать',
-          description: 'Приятно пакакать попай'
+          description: 'Приятно пакакать попай',
+          beginDate: '1.01.2001',
+          completeDate: '2.01.2001',
         },
         {
           id: 6,
           name: 'Пофифкать',
-          description: 'Приятно пакакать попай'
+          description: 'Приятно пакакать попай',
+          beginDate: '1.01.2001',
+          completeDate: '2.01.2001',
         }
       ]
     }
@@ -59,6 +68,13 @@ export default createStore({
 
     deleteTodoItem(state, itemId) {
       state.todoList = state.todoList.filter(item => item.id !== itemId);
+    },
+
+    completeItem(state, todoItem) {
+      state.todoList = state.todoList.filter(item => item.id != todoItem.id);
+
+      todoItem.completeDate = new Date();
+      state.completedList.push(todoItem);
     }
   },
 

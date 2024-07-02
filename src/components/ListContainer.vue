@@ -44,7 +44,7 @@
           description: ''
         };
 
-        router.replace({
+        router.push({
           path: '/todo_edit',
           query: {
             isNewItem: true,
@@ -66,6 +66,8 @@
       border: 3px solid #d85fe3;
       border-radius: 50px;
       background-color: #f9e3fa;
+      display: flex;
+      flex-direction: column;
   }
   
   .todo-list-container__button-container {
@@ -86,7 +88,8 @@
     border: 3px dashed red;
     border-radius: 15px;
     padding: 1em;
-    height: auto;
+    height: 100%;
     overflow-y: auto;
+    flex-grow: 1;
   }
 </style>

@@ -1,13 +1,17 @@
 <template>
   <span class="completed-list-item">
     <div class="completed-list-item__text">
-      {{ getFormattedDate }} {{ completedInfo.name }}
+      Название: {{ completedInfo.name }}<br>
+      Начало: {{ getFormattedDate(props.completedInfo.beginDate) }} <br>
+      Конец: {{ getFormattedDate(props.completedInfo.completeDate) }} <br>
     </div>
   </span>
 </template>
 
 <script setup>
   import { defineProps, computed } from 'vue';
+
+  import { getFormattedDate } from '@/utils/dateUtils';
 
   const props = defineProps({
     completedInfo: {
@@ -16,21 +20,11 @@
         id: null,
         name: 'Постирать трусы',
         description: 'Прополоскать трусы',
+        beginDate: '1.01.2001',
+        completeDate: '2.01.2001'
       }
     },
-    completionDate: {
-      type: Date,
-    }
   })
-
-  const getFormattedDate = computed(() => {
-      let year = props.completionDate.getFullYear();
-      let month = (1 + props.completionDate.getMonth()).toString().padStart(2, '0');
-      let day = props.completionDate.getDate().toString().padStart(2, '0');
-    
-      return month + '/' + day + '/' + year;
-    }
-  );
 
 </script>
 

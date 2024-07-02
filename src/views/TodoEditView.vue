@@ -15,6 +15,12 @@
 
     <div class="todo-edit__buttons-wrapper">  <!-- TODO: В тестовом режиме потестить динамическое добавление класса right-aligned-->
       <ButtonItem
+      :textContent="'Завершить'"
+      :isActive="!isNewItem"
+      :style="completeButtonStyle"
+      @buttonClicked="processCompleteBtnClick"
+      />
+      <ButtonItem
       :textContent="'Сохранить'"
       :style="saveButtonStyle"
       @buttonClicked="processSaveBtnClick"
@@ -28,25 +34,27 @@
   import { useRoute, onBeforeRouteUpdate  } from 'vue-router';
 
   let todoInfo = ref({});
-  let isNewItem = true;
+  let isNewItem = ref(true);
+
+  const route = useRoute();
 
   onMounted(() => {
-    const route = useRoute();
+    updateTodoInfoAndIsNewItem(route);
+  });
 
-    console.log(route.query);
+  onBeforeRouteUpdate((to, from, next) => {
+    updateTodoInfoAndIsNewItem(to);
+    next();
+  });
 
+  function updateTodoInfoAndIsNewItem(route) {
     todoInfo.value = JSON.parse(route.query.todoInfo);
-    isNewItem = JSON.parse(route.query.isNewItem);
-  })
+    isNewItem.value = JSON.parse(route.query.isNewItem);
+  }
 
-  // onBeforeRouteUpdate ((to, from, next) => {
-  //   console.log('route updated');
-  //   todoInfo.value = JSON.parse(to.query.todoInfo);
-  //   isNewItem = JSON.parse(to.query.isNewItem);
-    
-  //   next();
-  // })
-  
+  import store from '@/store/store';
+  import router from '@/router/router';
+
   import ButtonItem from "@/components/ButtonItem.vue";
 
   const saveButtonStyle = {
@@ -54,16 +62,26 @@
     color: 'white',
     boxShadow: 'none',
   }
-
-  import store from '@/store/store';
-  import router from '@/router/router';
-
+  
   function processSaveBtnClick() {
 
-    const mutationType = isNewItem ? 'addTodoItem' : 'updateTodoItem';
+    const mutationType = isNewItem.value ? 'addTodoItem' : 'updateTodoItem';
     store.commit(mutationType, todoInfo.value);
 
-    router.push('/');
+    router.push('/todo_list');
+  }
+
+  const completeButtonStyle = {
+    backgroundColor: 'orange',
+    color: 'white',
+    boxShadow: 'none',
+  }
+
+  function processCompleteBtnClick() {
+
+    store.commit('completeItem', todoInfo.value);
+
+    router.push('/todo_list');
   }
 </script>
 
@@ -73,13 +91,13 @@
     flex-direction: column;
     align-items: start;
     gap: 10px;
-    font-size: 18px;
   }
   
   input, textarea { 
     padding: 5px;
     border: 1px solid grey;
     border-radius: 6px;
+    font-size: 18px;
   }
 
   .todo-edit__name-input {
@@ -95,7 +113,7 @@
 
   .todo-edit__buttons-wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     width: 100%;
   }
 

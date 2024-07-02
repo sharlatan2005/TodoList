@@ -1,13 +1,13 @@
 <template>
   <button class="button"
   @click="$emit('buttonClicked', props.textContent)"
+  :class="{ inactive: !props.isActive }"
   >
   {{ textContent }}
   </button>
 </template>
 
 <script setup>
-  import { onMounted, watch } from 'vue';
   import { defineProps, defineEmits } from 'vue';
 
   const emits = defineEmits([
@@ -17,7 +17,11 @@
   const props = defineProps({
     textContent: {
       type: String,
-      default: 'Push me'
+      default: 'Push me',
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     }
   })
 </script>
@@ -37,4 +41,9 @@
     box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5);
   }
 
+  .inactive {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 </style>
